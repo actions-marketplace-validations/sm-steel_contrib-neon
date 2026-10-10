@@ -25,17 +25,23 @@ describe("renderSvg", () => {
 		const off = renderSvg(cal, parseOutput("x.svg?hud=false&glitch=false"));
 		expect(off).not.toContain("CONTRIB.LOG");
 		expect(off).not.toContain("@font-face");
-		expect(off).not.toContain('class="gk');
+		expect(off).not.toContain('class="nk-gk');
 		const on = renderSvg(cal, mocha);
 		expect(on).toContain("CONTRIB.LOG");
 		expect(on).toContain("@font-face{font-family:'ContribNeon Mono'");
-		expect(on).toContain('class="gk');
+		expect(on).toContain('class="nk-gk');
 	});
 
 	it("escapes the user name and respects reduced motion", () => {
 		const svg = renderSvg({ ...cal, user: "a<b&c" }, mocha);
 		expect(svg).toContain("a&lt;b&amp;c");
 		expect(svg).toContain("prefers-reduced-motion");
+	});
+
+	it("emits the reduced-motion rule last so it overrides the glitch animations too", () => {
+		expect(renderSvg(cal, mocha)).toMatch(
+			/@media \(prefers-reduced-motion:reduce\)\{[^}]*\{animation:none\}\}<\/style>/,
+		);
 	});
 
 	it("stays within the size budget for a full year", () => {

@@ -1,6 +1,6 @@
 {
 	"name": "contrib-neon",
-	"version": "0.1.0",
+	"version": "1.1.0",
 	"description": "Cyberpunk neon animated SVG of your GitHub contribution graph",
 	"license": "MIT",
 	"type": "module",
@@ -22,10 +22,12 @@
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^2.5.15",
-		"@fontsource/monaspace-neon": "^5.3.0",
 		"@types/node": "^26.6.5",
 		"esbuild": "^0.28.2",
 		"typescript": "^7.0.2",
 		"vitest": "^5.0.3"
+	},
+	"dependencies": {
+		"@sm-steel/neon-kit": "^1.0.1"
 	}
 }

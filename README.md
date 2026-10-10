@@ -120,4 +120,4 @@ Tools are pinned with [mise](https://mise.jdx.dev): `mise install && npm ci`.
 
 ## License
 
-MIT. The header text uses an embedded ASCII subset of [Monaspace Neon](https://github.com/githubnext/monaspace) (© 2023 GitHub, SIL Open Font License 1.1), renamed `ContribNeon Mono` as the OFL requires for modified versions; see [fonts/OFL.txt](fonts/OFL.txt). Rebuild it with `uv run scripts/build_font.py`.
+MIT. The header text uses an embedded subset of Monaspace Neon v1.400 provided by [@sm-steel/neon-kit](https://github.com/sm-steel/neon-kit) (© 2023 GitHub, SIL Open Font License 1.1, renamed `ContribNeon Mono` as the OFL requires for modified versions). The frame, scanlines, beam and glitch effects come from the same kit.

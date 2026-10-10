@@ -1,3 +1,7 @@
+import type { Palette } from "@sm-steel/neon-kit";
+
+export type { Palette };
+
 export type Level = 0 | 1 | 2 | 3 | 4;
 
 export interface Day {
@@ -13,23 +17,6 @@ export interface Calendar {
 	total: number;
 	/** Week columns, oldest first. The first week may start mid-week. */
 	weeks: Day[][];
-}
-
-export interface Palette {
-	dark: boolean;
-	background: string;
-	border: string;
-	empty: string;
-	/** Colors for levels 1-4. */
-	levels: [string, string, string, string];
-	/** Hot center drawn on level-4 cells. */
-	core: string;
-	text: string;
-	subtext: string;
-	accent: string;
-	/** Chromatic-aberration channel colors for glitch frames. */
-	glitchA: string;
-	glitchB: string;
 }
 
 export interface RenderOptions {

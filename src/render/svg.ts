@@ -1,28 +1,24 @@
+import {
+	beam,
+	brackets,
+	cursorAfter,
+	cursorRect,
+	esc,
+	FONT_STACK,
+	fontFace,
+	HUD,
+	panel,
+	scanlines,
+} from "@sm-steel/neon-kit";
 import type { Calendar, RenderOptions } from "../types.ts";
-import { baseCss, filterDefs, glitchLayer, TIMING } from "./effects.ts";
-import { FONT_FAMILY, FONT_WOFF2 } from "./font.ts";
+import {
+	baseCss,
+	filterDefs,
+	glitchLayer,
+	REDUCED_MOTION_CSS,
+	TIMING,
+} from "./effects.ts";
 import { type Cell, type Grid, layout } from "./grid.ts";
-
-const FONT = `'${FONT_FAMILY}',ui-monospace,'Cascadia Code',SFMono-Regular,Menlo,Consolas,monospace`;
-const FONT_SIZE = 10;
-const LETTER_SPACING = 1.2;
-/** Monaspace advance width is 0.62em. */
-const CHAR_WIDTH = FONT_SIZE * 0.62 + LETTER_SPACING;
-
-const fontFace = `@font-face{font-family:'${FONT_FAMILY}';src:url(data:font/woff2;base64,${FONT_WOFF2}) format('woff2')}`;
-
-const esc = (s: string) =>
-	s.replace(
-		/[<>&"']/g,
-		(ch) =>
-			({
-				"<": "&lt;",
-				">": "&gt;",
-				"&": "&amp;",
-				'"': "&quot;",
-				"'": "&apos;",
-			})[ch] as string,
-	);
 
 const delay = (c: Cell) =>
 	+(c.col * TIMING.colDelay + c.row * TIMING.rowDelay).toFixed(3);
@@ -63,31 +59,16 @@ function hud(g: Grid, cal: Calendar, opts: RenderOptions): string {
 	const right = g.gridLeft + g.gridWidth;
 	const total = cal.total.toLocaleString("en-US");
 	const left = `// CONTRIB.LOG :: @${cal.user}`;
-	// The embedded font is monospace, so the cursor sits right after the text.
-	const cursorX = +(g.gridLeft + left.length * CHAR_WIDTH + 2).toFixed(1);
 	return (
-		`<g class="hud" font-family="${FONT}" font-size="${FONT_SIZE}" letter-spacing="${LETTER_SPACING}">` +
+		`<g class="hud" font-family="${FONT_STACK}" font-size="${HUD.size}" letter-spacing="${HUD.spacing}">` +
 		`<text x="${g.gridLeft}" y="${y}" fill="${p.subtext}">` +
 		`<tspan fill="${p.accent}">//</tspan> CONTRIB.LOG <tspan fill="${p.accent}">::</tspan> ` +
 		`<tspan fill="${p.text}">@${esc(cal.user)}</tspan></text>` +
-		`<rect class="cur" x="${cursorX}" y="${y - 7.5}" width="5" height="9" fill="${p.accent}"/>` +
+		cursorRect(cursorAfter(left, g.gridLeft), y, p) +
 		`<text x="${right}" y="${y}" text-anchor="end" fill="${p.subtext}">` +
 		`<tspan fill="${p.text}">${total}</tspan> CONTRIBUTIONS <tspan fill="${p.accent}">//</tspan> LAST 365D</text>` +
 		`</g>`
 	);
-}
-
-function brackets(g: Grid, opts: RenderOptions): string {
-	const { width: w, height: h } = g;
-	const i = 4;
-	const l = 10;
-	const d = [
-		`M${i} ${i + l}V${i}H${i + l}`,
-		`M${w - i - l} ${i}H${w - i}V${i + l}`,
-		`M${i} ${h - i - l}V${h - i}H${i + l}`,
-		`M${w - i - l} ${h - i}H${w - i}V${h - i - l}`,
-	].join("");
-	return `<path d="${d}" fill="none" stroke="${opts.palette.accent}" stroke-width="1.5" stroke-opacity=".8"/>`;
 }
 
 export function renderSvg(cal: Calendar, opts: RenderOptions): string {
@@ -104,17 +85,17 @@ export function renderSvg(cal: Calendar, opts: RenderOptions): string {
 	return (
 		`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${g.width} ${g.height}" width="${g.width}" height="${g.height}" role="img" aria-label="${esc(label)}">` +
 		`<title>${esc(label)}</title>` +
-		`<style>${opts.hud ? fontFace : ""}${baseCss(g, p)}${glitch.css}</style>` +
+		`<style>${opts.hud ? fontFace("hud") : ""}${baseCss(g, p)}${glitch.css}${REDUCED_MOTION_CSS}</style>` +
 		`<defs>${filterDefs(g, p)}${glitch.defs}</defs>` +
-		`<rect x=".5" y=".5" width="${g.width - 1}" height="${g.height - 1}" fill="${p.background}" stroke="${p.border}"/>` +
+		panel(g.width, g.height, p) +
 		(opts.hud ? hud(g, cal, opts) : "") +
 		glows +
 		cells(g, opts) +
 		`<rect class="hd" x="${g.gridLeft - 3}" y="${g.gridTop - 4}" width="2" height="${g.gridHeight + 8}" fill="${p.accent}" filter="url(#g4)"/>` +
 		glitch.svg +
-		`<rect width="${g.width}" height="${g.height}" fill="url(#sl)" pointer-events="none"/>` +
-		`<rect class="bm" width="${g.width}" height="40" fill="url(#bm)" pointer-events="none"/>` +
-		brackets(g, opts) +
+		scanlines(g) +
+		beam(g) +
+		brackets(g.width, g.height, p) +
 		`</svg>`
 	);
 }

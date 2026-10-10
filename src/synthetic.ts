@@ -1,4 +1,4 @@
-import { seeded } from "./rng.ts";
+import { seeded } from "@sm-steel/neon-kit";
 import type { Calendar, Day, Level } from "./types.ts";
 
 /**
