@@ -10,8 +10,8 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
-      - uses: jdx/mise-action@v3
+      - uses: actions/checkout@v7
+      - uses: jdx/mise-action@v5
       - run: npm ci
       - run: npm run lint
       - run: npm run typecheck
@@ -23,14 +23,14 @@ jobs:
   self-test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       - uses: ./
         with:
           github_user_name: ${{ github.repository_owner }}
           outputs: |
             out/neon-latte.svg?flavor=latte
             out/neon-mocha.svg?flavor=mocha
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: contrib-neon
           path: out

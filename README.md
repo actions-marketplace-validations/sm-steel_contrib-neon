@@ -36,7 +36,7 @@ jobs:
             dist/contrib-neon-dark.svg?flavor=mocha
 
       # publish the SVGs to an `output` branch
-      - uses: crazy-max/ghaction-github-pages@v4
+      - uses: crazy-max/ghaction-github-pages@v5
         with:
           target_branch: output
           build_dir: dist
