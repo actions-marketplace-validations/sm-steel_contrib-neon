@@ -54,6 +54,11 @@ if (real)
 			"macchiato",
 		])),
 	);
+// README demo images, from a fixed synthetic calendar so they stay stable
+await generate(syntheticCalendar("busy-dev", 0.85), [
+	"docs/demo-latte.svg?flavor=latte",
+	"docs/demo-mocha.svg?flavor=mocha",
+]);
 shots.push(
 	...(await render(syntheticCalendar("busy-dev", 0.85), "busy", [
 		"latte",

@@ -24,9 +24,11 @@ describe("renderSvg", () => {
 	it("toggles the hud and glitch layers", () => {
 		const off = renderSvg(cal, parseOutput("x.svg?hud=false&glitch=false"));
 		expect(off).not.toContain("CONTRIB.LOG");
+		expect(off).not.toContain("@font-face");
 		expect(off).not.toContain('class="gk');
 		const on = renderSvg(cal, mocha);
 		expect(on).toContain("CONTRIB.LOG");
+		expect(on).toContain("@font-face{font-family:'ContribNeon Mono'");
 		expect(on).toContain('class="gk');
 	});
 

@@ -1,0 +1,27 @@
+name: contrib-neon
+description: Cyberpunk neon animated SVG of a GitHub contribution graph
+author: sm-steel
+branding:
+  icon: activity
+  color: purple
+
+inputs:
+  github_user_name:
+    description: GitHub login whose contribution graph is rendered
+    required: true
+  outputs:
+    description: |
+      One output file per line, with options as a query string, e.g.
+        dist/neon.svg?flavor=latte
+        dist/neon-dark.svg?flavor=mocha&glitch=false
+      Options: flavor (latte|frappe|macchiato|mocha), hud, glitch,
+      color_levels (4 colors), color_background, color_empty. Write # as %23.
+    required: true
+  github_token:
+    description: Token used to read the contribution calendar
+    required: false
+    default: ${{ github.token }}
+
+runs:
+  using: node24
+  main: dist/action.js

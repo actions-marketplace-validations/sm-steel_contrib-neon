@@ -1,9 +1,15 @@
 import type { Calendar, RenderOptions } from "../types.ts";
 import { baseCss, filterDefs, glitchLayer, TIMING } from "./effects.ts";
+import { FONT_FAMILY, FONT_WOFF2 } from "./font.ts";
 import { type Cell, type Grid, layout } from "./grid.ts";
 
-const FONT =
-	"ui-monospace,'Cascadia Code','JetBrains Mono',SFMono-Regular,Menlo,Consolas,monospace";
+const FONT = `'${FONT_FAMILY}',ui-monospace,'Cascadia Code',SFMono-Regular,Menlo,Consolas,monospace`;
+const FONT_SIZE = 10;
+const LETTER_SPACING = 1.2;
+/** Monaspace advance width is 0.62em. */
+const CHAR_WIDTH = FONT_SIZE * 0.62 + LETTER_SPACING;
+
+const fontFace = `@font-face{font-family:'${FONT_FAMILY}';src:url(data:font/woff2;base64,${FONT_WOFF2}) format('woff2')}`;
 
 const esc = (s: string) =>
 	s.replace(
@@ -56,11 +62,15 @@ function hud(g: Grid, cal: Calendar, opts: RenderOptions): string {
 	const y = g.gridTop - 12;
 	const right = g.gridLeft + g.gridWidth;
 	const total = cal.total.toLocaleString("en-US");
+	const left = `// CONTRIB.LOG :: @${cal.user}`;
+	// The embedded font is monospace, so the cursor sits right after the text.
+	const cursorX = +(g.gridLeft + left.length * CHAR_WIDTH + 2).toFixed(1);
 	return (
-		`<g class="hud" font-family="${FONT}" font-size="10" letter-spacing="1.2">` +
+		`<g class="hud" font-family="${FONT}" font-size="${FONT_SIZE}" letter-spacing="${LETTER_SPACING}">` +
 		`<text x="${g.gridLeft}" y="${y}" fill="${p.subtext}">` +
 		`<tspan fill="${p.accent}">//</tspan> CONTRIB.LOG <tspan fill="${p.accent}">::</tspan> ` +
-		`<tspan fill="${p.text}">@${esc(cal.user)}</tspan><tspan class="cur" fill="${p.accent}">▌</tspan></text>` +
+		`<tspan fill="${p.text}">@${esc(cal.user)}</tspan></text>` +
+		`<rect class="cur" x="${cursorX}" y="${y - 7.5}" width="5" height="9" fill="${p.accent}"/>` +
 		`<text x="${right}" y="${y}" text-anchor="end" fill="${p.subtext}">` +
 		`<tspan fill="${p.text}">${total}</tspan> CONTRIBUTIONS <tspan fill="${p.accent}">//</tspan> LAST 365D</text>` +
 		`</g>`
@@ -94,7 +104,7 @@ export function renderSvg(cal: Calendar, opts: RenderOptions): string {
 	return (
 		`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${g.width} ${g.height}" width="${g.width}" height="${g.height}" role="img" aria-label="${esc(label)}">` +
 		`<title>${esc(label)}</title>` +
-		`<style>${baseCss(g, p)}${glitch.css}</style>` +
+		`<style>${opts.hud ? fontFace : ""}${baseCss(g, p)}${glitch.css}</style>` +
 		`<defs>${filterDefs(g, p)}${glitch.defs}</defs>` +
 		`<rect x=".5" y=".5" width="${g.width - 1}" height="${g.height - 1}" fill="${p.background}" stroke="${p.border}"/>` +
 		(opts.hud ? hud(g, cal, opts) : "") +
