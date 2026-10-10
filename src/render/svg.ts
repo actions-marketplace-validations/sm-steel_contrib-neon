@@ -96,7 +96,7 @@ export function renderSvg(cal: Calendar, opts: RenderOptions): string {
 		`<title>${esc(label)}</title>` +
 		`<style>${baseCss(g, p)}${glitch.css}</style>` +
 		`<defs>${filterDefs(g, p)}${glitch.defs}</defs>` +
-		`<rect x=".5" y=".5" width="${g.width - 1}" height="${g.height - 1}" rx="8" fill="${p.background}" stroke="${p.border}"/>` +
+		`<rect x=".5" y=".5" width="${g.width - 1}" height="${g.height - 1}" fill="${p.background}" stroke="${p.border}"/>` +
 		(opts.hud ? hud(g, cal, opts) : "") +
 		glows +
 		cells(g, opts) +
