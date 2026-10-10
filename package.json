@@ -1,0 +1,30 @@
+{
+	"name": "contrib-neon",
+	"version": "0.1.0",
+	"description": "Cyberpunk neon animated SVG of your GitHub contribution graph",
+	"license": "MIT",
+	"type": "module",
+	"bin": {
+		"contrib-neon": "dist/cli.js"
+	},
+	"files": [
+		"dist"
+	],
+	"engines": {
+		"node": ">=22.18"
+	},
+	"scripts": {
+		"test": "vitest run",
+		"lint": "biome check .",
+		"typecheck": "tsc --noEmit",
+		"build": "node build.mjs",
+		"preview": "node src/preview.ts"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^2.5.15",
+		"@types/node": "^26.6.5",
+		"esbuild": "^0.28.2",
+		"typescript": "^7.0.2",
+		"vitest": "^5.0.3"
+	}
+}
