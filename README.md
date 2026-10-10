@@ -9,6 +9,38 @@ Your GitHub contribution graph as an animated cyberpunk SVG: a CRT boot sweep li
 
 It's a single self-contained SVG (CSS animations + SVG filters, no scripts), so it works in a README `<img>`. Viewers with reduced motion enabled get a static, glowing version.
 
+## Gallery
+
+All four Catppuccin flavors, plus a few option combinations. Each caption is the `outputs` line that produced the image.
+
+**Latte**: `neon.svg?flavor=latte`
+
+<img alt="Latte flavor" src="docs/demo-latte.svg" />
+
+**Frappé**: `neon.svg?flavor=frappe`
+
+<img alt="Frappé flavor" src="docs/demo-frappe.svg" />
+
+**Macchiato**: `neon.svg?flavor=macchiato`
+
+<img alt="Macchiato flavor" src="docs/demo-macchiato.svg" />
+
+**Mocha** (default): `neon.svg?flavor=mocha`
+
+<img alt="Mocha flavor" src="docs/demo-mocha.svg" />
+
+**Minimal**, no header and no glitches: `neon.svg?hud=false&glitch=false`
+
+<img alt="Minimal variant" src="docs/demo-minimal.svg" />
+
+**Custom heat ramp** (Mocha green → yellow → peach → red): `neon.svg?color_levels=%23a6e3a1,%23f9e2af,%23fab387,%23f38ba8`
+
+<img alt="Custom heat colors on Mocha" src="docs/demo-heat.svg" />
+
+**Custom heat ramp on Latte**: `neon.svg?flavor=latte&color_levels=%2340a02b,%23df8e1d,%23fe640b,%23d20f39`
+
+<img alt="Custom heat colors on Latte" src="docs/demo-heat-latte.svg" />
+
 ## Usage
 
 Add a workflow to your profile repo (`<you>/<you>`), e.g. `.github/workflows/contrib-neon.yml`:

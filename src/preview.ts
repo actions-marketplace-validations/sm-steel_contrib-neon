@@ -57,7 +57,12 @@ if (real)
 // README demo images, from a fixed synthetic calendar so they stay stable
 await generate(syntheticCalendar("busy-dev", 0.85), [
 	"docs/demo-latte.svg?flavor=latte",
+	"docs/demo-frappe.svg?flavor=frappe",
+	"docs/demo-macchiato.svg?flavor=macchiato",
 	"docs/demo-mocha.svg?flavor=mocha",
+	"docs/demo-minimal.svg?flavor=mocha&hud=false&glitch=false",
+	"docs/demo-heat.svg?flavor=mocha&color_levels=%23a6e3a1,%23f9e2af,%23fab387,%23f38ba8",
+	"docs/demo-heat-latte.svg?flavor=latte&color_levels=%2340a02b,%23df8e1d,%23fe640b,%23d20f39",
 ]);
 shots.push(
 	...(await render(syntheticCalendar("busy-dev", 0.85), "busy", [
